@@ -53,7 +53,7 @@ const Navbar2 = () => {
         {/* Main navbar */}
         <nav className="max-w-7xl mx-auto  bg-emerald-600/80 flex items-center justify-between px-4 py-3 md:py-4 backdrop-blur-md shadow-md rounded-b-xl">
           {/* Logo */}
-          <div className="text-gray-800 font-extrabold text-xl tracking-wide">MyEdu</div>
+          <div className="text-gray-800 font-extrabold text-xl tracking-wide">Sahwa Arabic College</div>
 
           {/* Desktop Links */}
           <div className="hidden md:flex gap-8 items-center">

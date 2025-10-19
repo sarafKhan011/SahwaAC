@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react'; // for icons
 import heroImage1 from '../../assets/Images/BGimage.jpeg';
 import heroImage2 from '../../assets/heroImage2.jpg';
 
@@ -39,26 +38,13 @@ const HeroBackground = () => {
           initial={{ x: direction > 0 ? '100%' : '-100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: direction > 0 ? '-100%' : '100%', opacity: 0 }}
-          transition={{ duration: 1.2, ease: 'easeInOut' }}
+          transition={{ duration: 1.1, ease: 'easeInOut' }}
         />
       </AnimatePresence>
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* Navigation arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 p-2 rounded-full text-white hover:bg-black/60 transition"
-      >
-        <ChevronLeft size={28} />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 p-2 rounded-full text-white hover:bg-black/60 transition"
-      >
-        <ChevronRight size={28} />
-      </button>
 
       {/* Dots (Indicators) */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3">

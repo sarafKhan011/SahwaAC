@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Company Info */}
         <div>
-          <h2 className="text-2xl font-bold mb-4">Islamic College</h2>
+          <h2 className="text-2xl font-bold mb-4">Sahwa Arabic College</h2>
           <p className="text-white">
             Dedicated to quality education and innovation in every step.
           </p>
@@ -40,7 +40,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="mt-12 border-t border-gray-700 pt-6 text-center text-white text-sm">
-        © {new Date().getFullYear()} Islamic College. All rights reserved.
+        © {new Date().getFullYear()} Sahwa Arabic College. All rights reserved.
       </div>
     </footer>
   );
