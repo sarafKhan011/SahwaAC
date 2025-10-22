@@ -35,7 +35,7 @@ export default function Lecturers() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: false, amount: 0.5 }}
-              transition={{ delay: idx * 0.2 }}
+              transition={{ delay: idx * 0.1 }}
               whileHover={{ scale: 1.03 }}
               className="relative group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
             >

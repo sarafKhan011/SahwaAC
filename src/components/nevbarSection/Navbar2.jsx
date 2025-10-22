@@ -3,6 +3,7 @@ import { HiMenu, HiX } from "react-icons/hi";
 import { LuArrowDownRight } from "react-icons/lu";
 import { Link as RouterLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import LogoImage from "../../assets/Images/Logo.png"
 import {
   FaLinkedin,
   FaFacebookSquare,
@@ -73,9 +74,10 @@ const Navbar2 = () => {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-gray-800 font-extrabold text-xl tracking-wide"
+            className="flex items-center gap-2 text-gray-800 font-extrabold text-xl tracking-wide"
           >
-            Sahwa Arabic College
+            <img src={LogoImage} alt="Logo" className="w-9 h-9 object-cover" />
+            <span>Sahwa Arabic College</span>
           </motion.div>
 
           {/* Desktop Links */}
