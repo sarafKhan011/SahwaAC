@@ -1,9 +1,15 @@
 import React from 'react';
+import { fadeIn } from '@/framerMotion/variants';
+import { motion } from 'framer-motion';
 
 const HeroText = () => {
   return (
     <div className="text-white mb-6">
-      <h1
+      <motion.h1
+        variants={fadeIn('down', 0.2)}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0 }}
         className="
           text-4xl sm:text-5xl md:text-6xl lg:text-7xl 
           font-bold 
@@ -12,9 +18,13 @@ const HeroText = () => {
         "
       >
         Welcome to <br />Sahwa Arabic College
-      </h1>
+      </motion.h1>
 
-      <p
+      <motion.p
+        variants={fadeIn('right', 0.4)}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0 }}
         className="
           text-base sm:text-lg md:text-xl lg:text-2xl 
           text-white/90 
@@ -22,7 +32,7 @@ const HeroText = () => {
         "
       >
         Providing quality education and values
-      </p>
+      </motion.p>
     </div>
   );
 };

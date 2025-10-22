@@ -1,12 +1,11 @@
 import React from "react";
 import { BookOpen } from "lucide-react";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/framerMotion/variants"; // ✅ same fadeIn you used before
 
-// ✅ Example course images (replace with your own file paths)
+// ✅ Example course images (replace with your own)
 import WebDImg from "../../assets/Images/course/WebD.jpg";
 import GraphicImg from "../../assets/Images/course/Graphic.jpg";
-// import marketingImg from "../../assets/courses/marketing.jpg";
-// import pythonImg from "../../assets/courses/python.jpg";
-// import uiuxImg from "../../assets/courses/uiux.jpg";
 
 const courses = [
   { title: "Web Development", duration: "3 Months", students: 120, img: WebDImg },
@@ -21,33 +20,45 @@ export default function PopularCourses() {
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Title */}
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-emerald-700 mb-12">
+        <motion.h2
+          variants={fadeIn("down")}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: false, amount: 0.5 }}
+          className="text-3xl sm:text-4xl font-bold text-center text-emerald-700 mb-12"
+        >
           Popular Courses
-        </h2>
+        </motion.h2>
 
-        {/* Scrollable Cards */}
-        <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide">
+        {/* Scrollable Course Cards */}
+        <motion.div
+          variants={fadeIn("up")}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: false, amount: 0.5 }}
+          className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide"
+        >
           {courses.map((course, idx) => (
-            <div
+            <motion.div
               key={idx}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
               className="min-w-[260px] sm:min-w-[280px] bg-white rounded-2xl shadow-lg 
-              flex-shrink-0 hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                flex-shrink-0 hover:shadow-2xl transition-all duration-300"
             >
               {/* Course Image */}
               <div className="relative h-40 w-full rounded-t-2xl overflow-hidden">
-                <img
+                <motion.img
                   src={course.img}
                   alt={course.title}
                   className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
                 />
-                {/* Optional gradient overlay */}
-                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
               </div>
 
               {/* Course Details */}
               <div className="p-6 flex flex-col">
-                {/* Icon */}
-                <div className="bg-emerald-500 text-white p-3 rounded-full w-fit mb-3">
+                <div className="bg-emerald-500 text-white p-3 rounded-full w-fit mb-3 shadow-md">
                   <BookOpen size={22} />
                 </div>
 
@@ -55,21 +66,24 @@ export default function PopularCourses() {
                   {course.title}
                 </h3>
                 <p className="text-gray-600 text-sm mb-1">
-                  Duration: {course.duration}
+                  Duration: <span className="font-medium">{course.duration}</span>
                 </p>
                 <p className="text-gray-600 text-sm mb-4">
-                  Students: {course.students}
+                  Students: <span className="font-medium">{course.students}</span>
                 </p>
 
-                {/* Enroll Button */}
-                <button className="mt-auto bg-emerald-500 text-white px-4 py-2 rounded-xl 
-                  hover:bg-emerald-600 hover:scale-105 transition-all duration-300">
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="mt-auto bg-emerald-500 text-white px-4 py-2 rounded-xl 
+                    hover:bg-emerald-600 shadow-md transition-all duration-300"
+                >
                   Enroll Now
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

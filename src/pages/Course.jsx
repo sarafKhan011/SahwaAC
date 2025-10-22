@@ -1,14 +1,8 @@
 import React from "react";
 import { BookOpen, Users } from "lucide-react";
+import { motion } from "framer-motion";
 import Footer from "../components/footer/FooterMain";
-import Navbar2 from "../components/nevbarSection/Navbar2"
-
-// Example course images
-// import webDevImg from "../assets/courses/webdev.jpg";
-// import graphicImg from "../assets/courses/graphic.jpg";
-// import marketingImg from "../assets/courses/marketing.jpg";
-// import pythonImg from "../assets/courses/python.jpg";
-// import uiuxImg from "../assets/courses/uiux.jpg";
+import Navbar2 from "../components/nevbarSection/Navbar2";
 
 const courses = [
   { title: "Web Development", duration: "3 Months", students: 120, description: "Learn front-end and back-end development with modern tools." },
@@ -18,6 +12,25 @@ const courses = [
   { title: "UI/UX Design", duration: "2 Months", students: 90,  description: "Design user-friendly interfaces and enhance user experience." },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  hover: { scale: 1.03, transition: { duration: 0.3 } },
+};
+
+const buttonVariants = {
+  hover: { scale: 1.05, backgroundColor: "#16a34a", transition: { duration: 0.3 } },
+};
+
 export default function Course() {
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -25,33 +38,58 @@ export default function Course() {
 
       {/* Page Header */}
       <div className="max-w-7xl mx-auto px-4 py-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">All Courses</h1>
-        <p className="text-gray-600 text-lg md:text-xl">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+        >
+          All Courses
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="text-gray-600 text-lg md:text-xl"
+        >
           Explore our popular courses and boost your skills today!
-        </p>
+        </motion.p>
       </div>
 
       {/* Courses Grid */}
-      <div className="max-w-7xl mx-auto px-4 pb-16">
+      <motion.div
+        className="max-w-7xl mx-auto px-4 pb-16"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 group flex flex-col"
+              variants={cardVariants}
+              whileHover="hover"
+              className="relative bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col"
             >
               {/* Course Image */}
               <div className="h-48 w-full overflow-hidden rounded-t-2xl">
-                <img
+                <motion.img
                   src={course.img}
                   alt={course.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.5 }}
                 />
               </div>
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl flex flex-col justify-center items-center text-center px-4">
+              <motion.div
+                className="absolute inset-0 bg-black/60 opacity-0 rounded-2xl flex flex-col justify-center items-center text-center px-4"
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
                 <p className="text-white text-sm md:text-base">{course.description}</p>
-              </div>
+              </motion.div>
 
               {/* Content */}
               <div className="p-6 flex flex-col flex-1">
@@ -69,16 +107,20 @@ export default function Course() {
                   </span>
                 </div>
 
-                <button className="mt-auto bg-emerald-500 text-white py-2 rounded-xl hover:bg-emerald-600 transition">
+                <motion.button
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  className="mt-auto bg-emerald-500 text-white py-2 rounded-xl transition"
+                >
                   Enroll Now
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
-      {/* Footer (only once) */}
+      {/* Footer */}
       <Footer />
     </div>
   );

@@ -1,9 +1,8 @@
 import Navbar2 from "../components/nevbarSection/Navbar2";
 import React from "react";
+import { motion } from "framer-motion";
 import Event1 from "../assets/Images/Event1.jpg";
 import Footer from "@/components/footer/FooterMain";
-// import ScienceExhibition from "../../assets/Images/science-exhibition.jpg";
-// import CulturalFest from "../../assets/Images/cultural-fest.jpg";
 
 const events = [
   {
@@ -32,36 +31,45 @@ const events = [
 function Events() {
   return (
     <>
-    <main className="w-full min-h-screen px-6 py-12 bg-gray-100 font-body">
-      <Navbar2 />
-      {/* Page Heading */}
-      <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
-        Events
-      </h1>
+      <main className="w-full min-h-screen px-6 py-12 bg-gray-100 font-body">
+        <Navbar2 />
 
-      {/* Events Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {events.map((event, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1"
-          >
-            <img
-              src={event.image}
-              alt={event.title}
-              className="w-full h-56 sm:h-48 md:h-52 lg:h-56 object-cover"
-            />
-            <div className="p-6">
-              <h2 className="text-2xl font-semibold mb-2">{event.title}</h2>
-              <p className="text-gray-500 mb-2">{new Date(event.date).toLocaleDateString()}</p>
-              <p className="text-gray-700">{event.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </main>
+        {/* Page Heading */}
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl font-bold text-center text-gray-800 mb-12"
+        >
+          Events
+        </motion.h1>
 
-    <Footer/>
+        {/* Events Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {events.map((event, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                src={event.image}
+                alt={event.title}
+                className="w-full h-56 sm:h-48 md:h-52 lg:h-56 object-cover"
+              />
+              <div className="p-6">
+                <h2 className="text-2xl font-semibold mb-2">{event.title}</h2>
+                <p className="text-gray-500 mb-2">{new Date(event.date).toLocaleDateString()}</p>
+                <p className="text-gray-700">{event.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </main>
+
+      <Footer />
     </>
   );
 }

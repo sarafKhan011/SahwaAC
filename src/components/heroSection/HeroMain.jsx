@@ -14,7 +14,7 @@ function HeroMain() {
           px-4 sm:px-8 z-10 text-center md:text-left"
         >
           <HeroText />
-          <div className="mt-4 sm:mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
+          <div className="mt-4 sm:mt-4   gap-3 justify-center md:justify-start">
             <HeroButton />
           </div>
         </div>

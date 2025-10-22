@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import LogoImage from "../../assets/Images/Logo.png";
 
+// Navbar Links
 const links = [
   { name: "Home", path: "/" },
   { name: "Courses", path: "/course" },
@@ -20,6 +21,7 @@ const links = [
   { name: "Contact", path: "/contact" },
 ];
 
+// Social Links
 const socialLinks = [
   { icon: FaLinkedin, link: "https://www.linkedin.com/in/mohammed-saraf-khan-5404682b8" },
   { icon: FaFacebookSquare, link: "https://www.facebook.com/" },
@@ -27,16 +29,26 @@ const socialLinks = [
   { icon: FaInstagramSquare, link: "https://www.instagram.com/saraf.musammil" },
 ];
 
-const SingleContactSocial = ({ Icon, link }) => (
-  <a
+// ✅ Animated Single Social Icon Component
+const SingleContactSocial = ({ Icon, link, delay }) => (
+  <motion.a
     href={link}
     target="_blank"
     rel="noopener noreferrer"
-    className="text-white text-2xl h-10 w-10 border border-white/20 rounded-full flex items-center justify-center 
-    hover:text-black hover:border-black transition-all duration-300"
+    initial={{ opacity: 0, y: 15 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4, delay }}
+    whileHover={{
+      scale: 1.15,
+      rotate: [0, 5, -5, 0],
+      transition: { duration: 0.6 },
+    }}
+    whileTap={{ scale: 0.9 }}
+    className="text-white text-2xl h-10 w-10 border border-white/25 rounded-full flex items-center justify-center 
+    hover:text-emerald-700 hover:bg-white hover:border-white transition-all duration-300"
   >
     <Icon />
-  </a>
+  </motion.a>
 );
 
 const NavbarMain = () => {
@@ -45,12 +57,9 @@ const NavbarMain = () => {
 
   const handleLinkClick = () => setIsOpen(false);
 
-  // Detect scroll to change navbar size/color
+  // ✅ Change navbar style on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) setScrolled(true);
-      else setScrolled(false);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -60,23 +69,24 @@ const NavbarMain = () => {
 
   return (
     <>
-      {/* Animated Header */}
       <motion.header
-  initial={{ y: -60, opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  transition={{ duration: 0.6, ease: "easeOut" }}
-  className={`fixed w-full top-0 left-0 z-50 backdrop-blur-md transition-all duration-500 ${
-    scrolled ? "bg-emerald-700/90 shadow-lg py-1.5" : "bg-emerald-600/70 py-2.5"
-  }`}
->
-  <div className="max-w-7xl mx-auto flex items-center justify-between px-4">
-    {/* Logo */}
-    <div className="flex items-center gap-2">
-      <img src={LogoImage} alt="Logo" className="w-9 h-9 object-cover" />
-      <h1 className="text-white font-bold text-lg sm:text-xl">
-        Sahwa Arabic College
-      </h1>
-    </div>
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed w-full top-0 left-0 z-50 backdrop-blur-md transition-all duration-500 ${
+          scrolled
+            ? "bg-emerald-700/90 shadow-lg py-1.5"
+            : "bg-emerald-600/70 py-2.5"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <img src={LogoImage} alt="Logo" className="w-9 h-9 object-cover" />
+            <h1 className="text-white font-bold text-lg sm:text-xl">
+              Sahwa Arabic College
+            </h1>
+          </div>
 
           {/* Desktop Links */}
           <div className="hidden md:flex gap-8 items-center">
@@ -84,14 +94,13 @@ const NavbarMain = () => {
               <motion.div key={idx} whileHover={{ scale: 1.1 }}>
                 <RouterLink to={link.path} onClick={handleLinkClick} className={linkClass}>
                   {link.name}
-                  {/* Animated underline */}
                   <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
                 </RouterLink>
               </motion.div>
             ))}
           </div>
 
-          {/* Desktop Button + Social */}
+          {/* Desktop Button + Social Icons */}
           <div className="hidden md:flex items-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }}>
               <RouterLink
@@ -103,22 +112,26 @@ const NavbarMain = () => {
               </RouterLink>
             </motion.div>
 
+            {/* ✅ Animated Social Icons */}
             <div className="flex gap-2">
               {socialLinks.map((item, idx) => (
-                <SingleContactSocial key={idx} Icon={item.icon} link={item.link} />
+                <SingleContactSocial key={idx} Icon={item.icon} link={item.link} delay={idx * 0.1} />
               ))}
             </div>
           </div>
 
           {/* Mobile Hamburger */}
           <div className="md:hidden flex items-center">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-white text-3xl p-2">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-white text-3xl p-2"
+            >
               {isOpen ? <HiX /> : <HiMenu />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu Animation */}
+        {/* ✅ Mobile Menu */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -139,9 +152,11 @@ const NavbarMain = () => {
                   <RouterLink
                     to={link.path}
                     onClick={handleLinkClick}
-                    className="font-medium text-white hover:text-black transition-all duration-300"
+                    className="font-medium text-white relative group transition-all duration-300 hover:text-white"
                   >
                     {link.name}
+                    {/* Animated underline for mobile */}
+                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
                   </RouterLink>
                 </motion.div>
               ))}
@@ -155,9 +170,10 @@ const NavbarMain = () => {
                 <LuArrowDownRight className="text-lg" />
               </RouterLink>
 
+              {/* ✅ Animated Social Icons in Mobile */}
               <div className="flex gap-3 mt-4 justify-center">
                 {socialLinks.map((item, idx) => (
-                  <SingleContactSocial key={idx} Icon={item.icon} link={item.link} />
+                  <SingleContactSocial key={idx} Icon={item.icon} link={item.link} delay={idx * 0.1} />
                 ))}
               </div>
             </motion.div>
