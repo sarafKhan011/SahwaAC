@@ -6,6 +6,10 @@ import PmMain from "../components/presidentMess/PmMain";
 import PopularCourse from "../components/popularcourse/PopularCourse";
 import Lecturer from "../components/lecturer/Lecturer";
 import Footer from "../components/footer/FooterMain";
+import Results from "@/components/Certificate/Results";
+import HomeR from "@/components/Certificate/HomeR";
+import StLogin from "@/components/Certificate/Login";
+import AddResult from "@/components/Certificate/AddResult";
 
 const Home = () => {
   return (
@@ -14,8 +18,11 @@ const Home = () => {
       <HeroMain />
       <SubhMain />
       <PmMain />
+      {/* <Results />
+      <HomeR />
+      <AddResult /> */}
       <PopularCourse />
-      <Lecturer />
+      {/* <Lecturer /> */}
       <Footer />
     </main>
   );

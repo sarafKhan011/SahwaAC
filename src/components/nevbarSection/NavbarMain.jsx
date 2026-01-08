@@ -104,7 +104,7 @@ const NavbarMain = () => {
           <div className="hidden md:flex items-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }}>
               <RouterLink
-                to="/contact"
+                to="/student-login"
                 className="rounded-full py-2.5 px-5 bg-white text-emerald-600 font-semibold flex items-center gap-2 shadow-md hover:bg-white/90 transition-all duration-300"
               >
                 Get Certificate
@@ -162,7 +162,7 @@ const NavbarMain = () => {
               ))}
 
               <RouterLink
-                to="/contact"
+                to="/student-login"
                 onClick={() => setIsOpen(false)}
                 className="mt-3 rounded-full py-2 px-4 bg-white text-emerald-600 font-semibold flex items-center gap-2 shadow-md hover:bg-white/90 hover:scale-105 transition-all duration-300"
               >

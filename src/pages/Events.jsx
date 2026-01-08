@@ -1,30 +1,32 @@
 import Navbar2 from "../components/nevbarSection/Navbar2";
 import React from "react";
 import { motion } from "framer-motion";
-import Event1 from "../assets/Images/Event1.jpg";
+import Event2 from "../assets/Images/Event2.jpg";
+import Event0 from "../assets/Images/Event1-1.jpg";
+import Event3 from "../assets/Images/Event3.jpg";
 import Footer from "@/components/footer/FooterMain";
 
 const events = [
   {
-    title: "Annual Sports Day",
-    date: "2025-11-15",
+    title: "Honorary Event",
+    date: "2025-08-27",
     description:
-      "Our students showcased their athletic talents and sportsmanship during the Annual Sports Day.",
-    image: Event1,
+    "An Honorary Event is a special program held to show respect and appreciation to someone for their achievements, hard work, or service. It is a way to honor and thank them in front of others.",
+    image: Event0,
   },
   {
-    title: "Science Exhibition",
-    date: "2025-10-20",
+    title: "Blood Donation",
+    date: "2025-07-16",
     description:
-      "Students presented innovative projects and experiments, demonstrating creativity and scientific thinking.",
-    image: Event1,
+    "Blood donation is when a person voluntarily gives their blood to help save someone else’s life. This donated blood is used for patients during emergencies, surgeries, or illnesses. It is a safe and simple way to help others.",
+    image: Event2,
   },
   {
-    title: "Cultural Fest",
-    date: "2025-09-10",
+    title: "Flood Relief Programme",
+    date: "2025-12-08",
     description:
-      "A celebration of our diverse culture with music, dance, and traditional performances by students.",
-    image: Event1,
+    "A Flood Relief Programme is a helping plan that supports people affected by floods. It provides food, water, clothes, medicine, safe places to stay, and helps repair damaged homes. The main goal is to keep people safe and help them return to normal life as soon as possible.",
+    image: Event3,
   },
 ];
 

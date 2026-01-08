@@ -14,8 +14,8 @@ import {
 // Navbar Links
 const links = [
   { name: "Home", path: "/home" },
-  { name: "Courses", path: "/course" },
   { name: "About Us", path: "/about" },
+  { name: "Courses", path: "/course" },
   { name: "Events", path: "/events" },
   { name: "Contact", path: "/contact" },
 ];

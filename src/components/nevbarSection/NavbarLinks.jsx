@@ -4,8 +4,8 @@ import { Link as RouterLink } from "react-router-dom";
 
 const links = [
   { name: "Home", path: "/" },
-  { name: "Courses", path: "/course" },
   { name: "About Us", path: "/about" },
+  { name: "Courses", path: "/course" },
   { name: "Events", path: "/events" },
   { name: "Contact", path: "/contact" },
 ];
