@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
+const API_BASE = "http://localhost:5000"; // <-- update if your backend URL is different
 
 function AddResult() {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ function AddResult() {
     year: "",
     index_no: "",
     student_name: "",
-    photoFile: null, // for selected photo file
+    photoFile: null, // selected file
     subject1: "",
     subject1_mark: "",
     subject2: "",
@@ -19,13 +21,13 @@ function AddResult() {
     subject3_mark: "",
     total: "",
     result_status: "",
+    existingPhoto: "", // for edit mode preview
   };
 
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("info");
-
   const [results, setResults] = useState([]);
   const [loadingList, setLoadingList] = useState(true);
   const [listError, setListError] = useState("");
@@ -43,10 +45,11 @@ function AddResult() {
   const fetchResults = async () => {
     try {
       setLoadingList(true);
-      const res = await axios.get("http://localhost:5000/api/results");
+      const res = await axios.get(`${API_BASE}/api/results`);
       setResults(res.data);
-    } catch {
+    } catch (err) {
       setListError("Failed to load results.");
+      console.error(err);
     } finally {
       setLoadingList(false);
     }
@@ -54,7 +57,7 @@ function AddResult() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (files) {
+    if (files && files[0]) {
       setForm({ ...form, photoFile: files[0] });
     } else {
       setForm({ ...form, [name]: value });
@@ -64,6 +67,8 @@ function AddResult() {
   const resetForm = () => {
     setForm(emptyForm);
     setEditingId(null);
+    setMessage("");
+    setMessageType("info");
   };
 
   const handleSubmit = async (e) => {
@@ -72,33 +77,45 @@ function AddResult() {
 
     try {
       const formData = new FormData();
-      for (let key in form) {
-        if (form[key] !== null) formData.append(key, form[key]);
-      }
+
+      // append all fields except existingPhoto
+      Object.entries(form).forEach(([key, value]) => {
+        if (key === "existingPhoto") return; // skip preview
+
+        if (key === "photoFile") {
+          if (value) formData.append("photo", value); // backend expects "photo"
+        } else {
+          // convert number fields to numbers
+          if (
+            ["year", "subject1_mark", "subject2_mark", "subject3_mark", "total"].includes(key)
+          ) {
+            formData.append(key, value ? Number(value) : 0);
+          } else {
+            formData.append(key, value);
+          }
+        }
+      });
 
       let res;
       if (editingId) {
-        res = await axios.put(
-          `http://localhost:5000/api/results/${editingId}`,
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
-        setMessage("Result updated successfully.");
+        res = await axios.put(`${API_BASE}/api/results/${editingId}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        setMessage("Result updated successfully ✅");
       } else {
-        res = await axios.post(
-          "http://localhost:5000/api/results",
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
-        setMessage("Result added successfully.");
+        res = await axios.post(`${API_BASE}/api/results`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        setMessage("Result added successfully ✅");
       }
 
+      console.log("Saved result:", res.data); // debug
       setMessageType("info");
       resetForm();
       fetchResults();
     } catch (err) {
       console.error(err);
-      setMessage("Error saving result.");
+      setMessage(err.response?.data?.message || "Error saving result.");
       setMessageType("error");
     }
   };
@@ -110,7 +127,8 @@ function AddResult() {
       year: row.year?.toString() || "",
       index_no: row.index_no || "",
       student_name: row.student_name || "",
-      photoFile: null, // reset file input
+      photoFile: null,
+      existingPhoto: row.photo || "", // keep existing photo for preview
       subject1: row.subject1 || "",
       subject1_mark: row.subject1_mark?.toString() || "",
       subject2: row.subject2 || "",
@@ -128,10 +146,13 @@ function AddResult() {
     if (!window.confirm("Delete this record?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/results/${editingId}`);
+      await axios.delete(`${API_BASE}/api/results/${editingId}`);
       resetForm();
       fetchResults();
-    } catch {
+      setMessage("Result deleted ✅");
+      setMessageType("info");
+    } catch (err) {
+      console.error(err);
       setMessage("Delete failed.");
       setMessageType("error");
     }
@@ -161,8 +182,23 @@ function AddResult() {
             <input className={input} name="index_no" placeholder="Index No" value={form.index_no} onChange={handleChange} />
             <input className={input} name="student_name" placeholder="Student Name" value={form.student_name} onChange={handleChange} />
             <input type="file" className={input} name="photo" onChange={handleChange} />
+            {/* Photo preview */}
+            {form.photoFile ? (
+              <img
+                src={URL.createObjectURL(form.photoFile)}
+                alt="preview"
+                className="w-24 h-24 object-cover rounded-full mt-2"
+              />
+            ) : form.existingPhoto ? (
+              <img
+                src={`${API_BASE}${form.existingPhoto}`}
+                alt="existing"
+                className="w-24 h-24 object-cover rounded-full mt-2"
+              />
+            ) : null}
           </div>
 
+          {/* SUBJECTS */}
           <h3 className="font-semibold text-emerald-700">Subjects</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input className={input} name="subject1" placeholder="Subject 1" value={form.subject1} onChange={handleChange} />
@@ -225,6 +261,8 @@ function AddResult() {
 
           {loadingList ? (
             <p className="text-gray-500">Loading...</p>
+          ) : listError ? (
+            <p className="text-red-500">{listError}</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full border border-emerald-200 rounded-lg">
@@ -255,7 +293,7 @@ function AddResult() {
                       <td className="p-2 text-center">
                         {r.photo && (
                           <img
-                            src={`http://localhost:5000/${r.photo}`}
+                            src={`${API_BASE}${r.photo}`}
                             alt={r.student_name}
                             className="w-12 h-12 object-cover rounded-full mx-auto"
                           />

@@ -8,11 +8,11 @@ import WebDImg from "../../assets/Images/course/WebD.jpg";
 import GraphicImg from "../../assets/Images/course/Graphic.jpg";
 
 const courses = [
-  { title: "Web Development", duration: "3 Months", students: 120, img: WebDImg },
-  { title: "Graphic Design", duration: "2 Months", students: 85, img: GraphicImg },
-  { title: "Digital Marketing", duration: "1.5 Months", students: 100, img: WebDImg },
-  { title: "Python Programming", duration: "3 Months", students: 150, img: WebDImg },
-  { title: "UI/UX Design", duration: "2 Months", students: 90, img: WebDImg },
+  { title: "Quranic Studies (دراسات القرآن)", duration: "3 Years", students: 120, description: "Study of the Quran, its meanings, and recitation." },
+  { title: "Fiqh – Islamic Jurisprudence (الفقه الإسلامي)", duration: "2 Years", students: 85,  description: "Study of Prophet’s sayings and actions." },
+  { title: "Islamic History (التاريخ الإسلامي)", duration: "1.5 Years", students: 100,  description: "Study of Islamic laws and rules." },
+  { title: "Comparative Religion (الدراسات المقارنة للأديان)", duration: "3 Years", students: 150,  description: "Study of different religions and beliefs." },
+  { title: "Theology / Aqeedah (العقيدة)", duration: "2 Years", students: 90,  description: "Study of Islamic beliefs and creed." },
 ];
 
 export default function PopularCourses() {
